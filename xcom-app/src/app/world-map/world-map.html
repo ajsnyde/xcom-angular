@@ -1,0 +1,13 @@
+<!--component html goes here -->
+<h2> WORLD MAP </h2>
+<div>
+  <img src="https://www.worldmapsonline.com/images/giclee/satellite_image_maps/world_physical_pacific_giclee_lg.jpg" style="z-index:-1;top: 0;
+left:0;
+position:absolute;">
+  <div>
+    <div *ngFor="let item of objects">
+      <img src="../../assets/ufo.png" style="position:absolute;" [style.left]="item.x+'px'" [style.top]="item.y+'px'">
+    </div>
+  </div>
+</div>
+<button (click)="move()">MOVE</button>
