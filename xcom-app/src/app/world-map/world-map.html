@@ -1,13 +1,11 @@
 <!--component html goes here -->
-<h2> WORLD MAP </h2>
-<div>
-  <img src="https://www.worldmapsonline.com/images/giclee/satellite_image_maps/world_physical_pacific_giclee_lg.jpg" style="z-index:-1;top: 0;
-left:0;
-position:absolute;">
-  <div>
-    <div *ngFor="let item of objects">
-      <img src="../../assets/ufo.png" style="position:absolute;" [style.left]="item.x+'px'" [style.top]="item.y+'px'">
-    </div>
+<select [(ngModel)]="speed" (ngModelChange)="timeChange()">
+  <option *ngFor="let c of [15,30,60,300,900,3600]" [ngValue]="c">{{c}} seconds</option>
+</select>
+<div id="mapContainer" style="position:absolute;">
+  <img src="https://www.worldmapsonline.com/images/giclee/satellite_image_maps/world_physical_pacific_giclee_lg.jpg" style="z-index:-1;position:absolute;"
+    [height]="height" [width]="width">
+  <div *ngFor="let item of objects" style="position:absolute" [style.left]="item.x+'px'" [style.top]="item.y+'px'">
+    <img [src]="item.imgPath" (click)="item.click()">
   </div>
 </div>
-<button (click)="move()">MOVE</button>
