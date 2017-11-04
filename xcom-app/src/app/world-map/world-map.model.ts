@@ -34,8 +34,10 @@ export class AlienBase extends Base {
 }
 export class XcomBase extends Base {
   imgPath = "../../assets/xcomBase.png";
-  constructor() {
+  constructor(x, y) {
     super();
+    this.x = x;
+    this.y = y;
   }
   click() {
     window.alert("xcomBase")

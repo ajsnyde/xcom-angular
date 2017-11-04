@@ -10,6 +10,8 @@
       <div *ngFor="let item of objects" style="position:absolute" [style.left]="item.x+'px'" [style.top]="item.y+'px'">
         <img [src]="item.imgPath" (click)="item.click()">
       </div>
+      <app-map-object *ngFor="let base of appService.player.bases; let i = index" [imgPath]="'../../assets/xcomBase.png'" [x]="base.x"
+        [y]="base.y" [name]="i" [type]="xcomBase" [routerLink]="['/baseView', i]"></app-map-object>
     </div>
   </div>
 </div>

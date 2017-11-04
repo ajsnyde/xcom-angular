@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { MapObject, AlienBase, XcomBase, XcomAircraft } from "./world-map.model";
 import { Observable, Subscription } from 'rxjs/Rx';
+import { AppService } from '../app.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'world-map',
@@ -10,8 +12,7 @@ import { Observable, Subscription } from 'rxjs/Rx';
 })
 export class WorldMap implements OnInit {
   objects: MapObject[] = [];
-  constructor() {
-  }
+  constructor(public appService: AppService, public router: Router) { }
   speed = 15;
   height = 500;
   width = 1000;
@@ -22,8 +23,6 @@ export class WorldMap implements OnInit {
       this.objects.push(new MapObject());
     for (let i = 0; i < 5; i++)
       this.objects.push(new AlienBase());
-    for (let i = 0; i < 7; i++)
-      this.objects.push(new XcomBase());
     for (let i = 0; i < 22; i++)
       this.objects.push(new XcomAircraft());
     this.timeChange();

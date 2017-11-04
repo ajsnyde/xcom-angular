@@ -18,7 +18,6 @@ export class Base {
     ).length * 50;
   }
   getPopCap() {
-    console.log(this.facilities)
     return this.facilities.filter(facility =>
       facility.type == FacilityType.livingQuarters
     ).length * 50;

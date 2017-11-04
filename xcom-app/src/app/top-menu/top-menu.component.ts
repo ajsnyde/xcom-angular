@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-top-menu',
@@ -8,8 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./top-menu.component.css']
 })
 export class TopMenuComponent implements OnInit {
-  constructor(router: Router) { }
-  @Input() bases = [];
+  constructor(router: Router, public appService: AppService) { }
   ngOnInit() {
   }
 }

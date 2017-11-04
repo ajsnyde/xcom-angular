@@ -12,6 +12,7 @@ import {
 } from '@angular/router';
 import { BaseViewComponent } from './base-view/base-view.component';
 import { AppService } from './app.service';
+import { MapObjectComponent } from './world-map/map-object/map-object.component';
 
 const routes: Routes = [
   { path: 'geoscape', component: WorldMap },
@@ -26,7 +27,8 @@ const routes: Routes = [
     AppComponent,
     WorldMap,
     TopMenuComponent,
-    BaseViewComponent
+    BaseViewComponent,
+    MapObjectComponent
   ],
   imports: [
     BrowserModule,
