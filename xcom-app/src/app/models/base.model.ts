@@ -5,38 +5,51 @@ export class Base {
   //location on map
   x = 0;
   y = 0;
-  facilities: Facility[] = DefaultFacilities;
+  facilities: Facility[] = DefaultFacilities();
   stores = [];
 
   getFacilityAt(x, y) {
     return this.facilities.find(facility => facility.x == x && facility.y == y)
   }
 
-  getStoreCap() {
-    return this.facilities.filter(facility => {
+  getStorageCap() {
+    return this.facilities.filter(facility =>
       facility.type == FacilityType.storage
-    }).length * 50;
+    ).length * 50;
   }
   getPopCap() {
-    return this.facilities.filter(facility => {
+    console.log(this.facilities)
+    return this.facilities.filter(facility =>
       facility.type == FacilityType.livingQuarters
-    }).length * 50;
+    ).length * 50;
   }
   getScienceCap() {
-    return this.facilities.filter(facility => {
+    return this.facilities.filter(facility =>
       facility.type == FacilityType.labs
-    }).length * 50;
+    ).length * 50;
   }
   getManufactureCap() {
-    return this.facilities.filter(facility => {
+    return this.facilities.filter(facility =>
       facility.type == FacilityType.workshop
-    }).length * 50;
+    ).length * 50;
   }
   getRadarRange() {
-    return this.facilities.filter(facility => {
+    return Math.sqrt(this.facilities.filter(facility =>
       facility.type == FacilityType.radar
-    }).length * 50;
+    ).length) * 2000;
   }
+
+  addFacility(type: FacilityType, x: number, y: number): Base {
+    if (this.getFacilityAt(x, y) == null) {
+      let facility = new Facility();
+      facility.x = x;
+      facility.y = y;
+      facility.type = type;
+      this.facilities.push(facility);
+    }
+    return this;
+  }
+
   init(name: string, x: number, y: number): Base {
     this.name = name;
     this.x = x;
