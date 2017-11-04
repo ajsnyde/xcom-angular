@@ -13,8 +13,8 @@ export class WorldMap implements OnInit {
   constructor() {
   }
   speed = 15;
-  height = 1000;
-  width = 2000;
+  height = 500;
+  width = 1000;
   tick: Subscription;
 
   ngOnInit() {

@@ -3,8 +3,8 @@ export class MapObject {
   x = 0;
   y = 0;
   constructor() {
-    this.x = Math.floor((Math.random() * 2000));
-    this.y = Math.floor((Math.random() * 1000));
+    this.x = Math.floor((Math.random() * 1000));
+    this.y = Math.floor((Math.random() * 500));
   }
   moveObjectRandom() {
     this.x += Math.floor(Math.random() * 3) - 1;

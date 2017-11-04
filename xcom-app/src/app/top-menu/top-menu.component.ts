@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-top-menu',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class TopMenuComponent implements OnInit {
   constructor(router: Router) { }
-
+  @Input() bases = [];
   ngOnInit() {
   }
 }
