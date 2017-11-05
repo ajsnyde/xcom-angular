@@ -26,9 +26,9 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     WorldMap,
+    MapObjectComponent,
     TopMenuComponent,
-    BaseViewComponent,
-    MapObjectComponent
+    BaseViewComponent
   ],
   imports: [
     BrowserModule,

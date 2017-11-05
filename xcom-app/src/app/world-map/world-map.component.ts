@@ -19,8 +19,6 @@ export class WorldMap implements OnInit {
   tick: Subscription;
 
   ngOnInit() {
-    for (let i = 0; i < 100; i++)
-      this.objects.push(new MapObject());
     for (let i = 0; i < 5; i++)
       this.objects.push(new AlienBase());
     for (let i = 0; i < 22; i++)
@@ -38,6 +36,7 @@ export class WorldMap implements OnInit {
   }
 
   move() {
+    this.appService.player.ufos.forEach(ufo => ufo.move());
     this.objects.forEach(mapObject => {
       mapObject.moveObjectRandom();
     });

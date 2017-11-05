@@ -12,6 +12,8 @@
       </div>
       <app-map-object *ngFor="let base of appService.player.bases; let i = index" [imgPath]="'../../assets/xcomBase.png'" [x]="base.x"
         [y]="base.y" [name]="i" [type]="xcomBase" [routerLink]="['/baseView', i]"></app-map-object>
+      <app-map-object *ngFor="let ufo of appService.player.ufos; let i = index" [imgPath]="'../../assets/ufo.png'" [x]="ufo.x"
+        [y]="ufo.y" [name]="i" [type]="ufo"></app-map-object>
     </div>
   </div>
 </div>
