@@ -1,5 +1,5 @@
 <h2>{{base.name}}</h2>
-<table style="width:100%">
+<table id="baseFacilities">
   <tbody>
     <tr *ngFor="let y of [0,1,2,3,4]">
       <td *ngFor="let x of [0,1,2,3,4]">
@@ -28,7 +28,7 @@
     </tr>
     <tr>
       <td>Radar Range</td>
-      <td>{{base.getRadarRange()}} km.</td>
+      <td>{{base.getRadarRange() | number : '1.2-2'}} km.</td>
     </tr>
   </tbody>
 </table>

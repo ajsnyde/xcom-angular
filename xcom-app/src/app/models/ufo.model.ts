@@ -24,6 +24,10 @@ export class Ufo {
   }
 
   public move() {
+    if (this.x - this.waypointX < this.UfoType.maxSpeed && this.y - this.waypointY < this.UfoType.maxSpeed) {
+      this.waypointX = Math.random() * 1000;
+      this.waypointY = Math.random() * 500;
+    }
     let tx = this.waypointX - this.x,
       ty = this.waypointY - this.y,
       dist = Math.sqrt(tx * tx + ty * ty),
