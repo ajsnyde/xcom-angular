@@ -22,8 +22,6 @@ export class WorldMap implements OnInit, OnDestroy {
   ngOnInit() {
     for (let i = 0; i < 5; i++)
       this.objects.push(new AlienBase());
-    for (let i = 0; i < 22; i++)
-      this.objects.push(new XcomAircraft());
     this.timeChange();
   }
   ngOnDestroy() {
@@ -40,6 +38,7 @@ export class WorldMap implements OnInit, OnDestroy {
 
   move() {
     this.appService.player.ufos.forEach(ufo => ufo.move());
+    this.appService.player.interceptors.forEach(interceptor => interceptor.move());
     this.objects.forEach(mapObject => {
       mapObject.moveObjectRandom();
     });
