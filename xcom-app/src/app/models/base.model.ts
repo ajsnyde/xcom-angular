@@ -1,4 +1,5 @@
 import { Facility, FacilityType, DefaultFacilities } from "./facility.model";
+import { Interceptor } from "./interceptor.model";
 
 export class Base {
   name = '';
@@ -7,6 +8,7 @@ export class Base {
   y = 0;
   facilities: Facility[] = DefaultFacilities();
   stores = [];
+  interceptors: Interceptor[] = [];
 
   getFacilityAt(x, y) {
     return this.facilities.find(facility => facility.x == x && facility.y == y)
@@ -35,7 +37,7 @@ export class Base {
   getRadarRange() {
     return Math.sqrt(this.facilities.filter(facility =>
       facility.type == FacilityType.radar
-    ).length) * 2000;
+    ).length) * 100;
   }
 
   addFacility(type: FacilityType, x: number, y: number): Base {

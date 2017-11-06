@@ -12,6 +12,7 @@ export class MapObjectComponent implements OnInit {
   @Input() name = '1';
   @Input() x = 0;
   @Input() y = 0;
+  @Input() radius = 0;
   @Output() clickEvent = new EventEmitter();
 
   constructor() { }
