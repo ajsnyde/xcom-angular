@@ -4,21 +4,33 @@
     <select [(ngModel)]="speed" (ngModelChange)="timeChange()">
       <option *ngFor="let c of speedChoices" [ngValue]="c">{{c}} seconds</option>
     </select>
+    <button class="btn-primary" (click)="launchButton(content)">Launch Task Force</button>
     <div id="mapContainer" style="position:absolute;">
       <img src="https://www.worldmapsonline.com/images/giclee/satellite_image_maps/world_physical_pacific_giclee_lg.jpg" style="z-index:-1;position:absolute;" [height]="height" [width]="width">
       <div *ngFor="let item of objects" style="position:absolute" [style.left]="item.x+'px'" [style.top]="item.y+'px'">
         <img [src]="item.imgPath" (click)="item.click()">
       </div>
-
-
-
       <div *ngFor="let base of appService.player.bases; let i = index" [ngStyle]="{'width': base.getRadarRange()*2+'px','height': base.getRadarRange()*2+'px', 'border-radius':base.getRadarRange()+'px','top':base.y+'px', 'left':base.x+'px'}" class="base">
         <img src="../../assets/xcomBase.png" [routerLink]="['/baseView', i]" class="baseIcon" [ngStyle]="{'margin-left':base.getRadarRange()+'px', 'margin-top':base.getRadarRange()+'px'}">
       </div>
-
-
       <app-map-object *ngFor="let ufo of appService.player.ufos; let i = index" [imgPath]="'../../assets/ufo.png'" [x]="ufo.x" [y]="ufo.y" [name]="i" [type]="ufo"></app-map-object>
       <app-map-object *ngFor="let interceptor of appService.player.interceptors; let i = index" [imgPath]="'../../assets/xcomAircraft.png'" [x]="interceptor.x" [y]="interceptor.y" [name]="i" [type]="interceptor"></app-map-object>
     </div>
   </div>
 </div>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Scramble Interceptors</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <select [(ngModel)]="proposedTaskForce" multiple>
+      <option *ngFor="let interceptor of appService.player.getInterceptors()" value="interceptor"> {{interceptor.name}}</option>
+    </select>`
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>

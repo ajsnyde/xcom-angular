@@ -8,7 +8,7 @@ export class Base {
   y = 0;
   facilities: Facility[] = DefaultFacilities();
   stores = [];
-  interceptors: Interceptor[] = [];
+  interceptors: Interceptor[] = [new Interceptor(500, 250), new Interceptor(500, 250)];
 
   getFacilityAt(x, y) {
     return this.facilities.find(facility => facility.x == x && facility.y == y)
@@ -55,6 +55,7 @@ export class Base {
     this.name = name;
     this.x = x;
     this.y = y;
+    this.interceptors.forEach(interceptor => { interceptor.x = this.x; interceptor.y = this.y; })
     return this;
   }
 }

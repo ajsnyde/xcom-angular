@@ -4,6 +4,7 @@ import { MapObject, AlienBase, XcomBase, XcomAircraft } from "./world-map.model"
 import { Observable, Subscription } from 'rxjs/Rx';
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'world-map',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class WorldMap implements OnInit, OnDestroy {
   objects: MapObject[] = [];
-  constructor(public appService: AppService, public router: Router) { }
+  constructor(public appService: AppService, public router: Router, private modalService: NgbModal) { }
   speedChoices = [15, 30, 60, 300, 900, 3600];
   speed = this.speedChoices[0];
   height = 500;
@@ -48,6 +49,24 @@ export class WorldMap implements OnInit, OnDestroy {
     if (event < this.speedChoices.length && event >= 0) {
       this.speed = this.speedChoices[event];
       this.timeChange();
+    }
+  }
+
+  launchButton(content) {
+    this.modalService.open(content).result.then((result) => {
+      console.log(`Closed with: ${result}`);
+    }, (reason) => {
+      console.log(`Dismissed ${this.getDismissReason(reason)}`);
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
     }
   }
 }
