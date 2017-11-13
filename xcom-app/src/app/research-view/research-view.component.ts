@@ -15,10 +15,11 @@ export class ResearchViewComponent implements OnInit {
   constructor(private http: Http, private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.http.request('../../assets/json/research.json').subscribe(response => {
-      ResearchTopic.allResearch = response.json();
-      this.ref.detectChanges();
-    });
+    if (ResearchTopic.allResearch.length == 0)
+      this.http.request('../../assets/json/research.json').subscribe(response => {
+        ResearchTopic.allResearch = response.json();
+        this.ref.detectChanges();
+      });
   }
 
   getAvailable(): ResearchTopic[] {
