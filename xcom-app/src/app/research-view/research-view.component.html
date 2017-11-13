@@ -4,7 +4,7 @@
     <tr *ngFor="let r of getAvailable()">
       <td>{{r.name}}</td>
       <td>
-        <button (click)="research(r.name)">Research</button>
+        <button (click)="research(r.name)" class="btn btn-outline-success">Research</button>
       </td>
     </tr>
   </tbody>

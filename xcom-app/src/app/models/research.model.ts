@@ -19,8 +19,12 @@ export class ResearchTopic {
       research.isAvailable = research.isAvailable || research.reqs == "" || undefined != reqSet.find(set => {
         // then check all reqs. If all reqs are met on any given set, set isAvailable flag to true.
         return set.split('(AND)').every(req => {
-          let research = ResearchTopic.allResearch.find(research => research.name == req)
-          return (!!research && research.isComplete);
+          if (req.startsWith("Researchs.")) {
+            let research = ResearchTopic.allResearch.find(research => research.name == req)
+            return (!!research && research.isComplete);
+          } else if (req.startsWith("Items.")) {
+            return true; // TODO: integrate with inventory system
+          }
         });
       })
     });
