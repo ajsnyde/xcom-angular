@@ -9,16 +9,21 @@ import { ResearchTopic } from '../models/research.model';
 })
 export class ResearchViewComponent implements OnInit {
 
-  allResearch: ResearchTopic[] = [];
+  availableResearch: ResearchTopic[] = [];
 
   constructor(private http: Http) { }
 
   ngOnInit() {
     this.http.request('../../assets/json/research.json').subscribe(response => {
       ResearchTopic.allResearch = response.json();
-      ResearchTopic.updateAvailable();
-      this.allResearch = ResearchTopic.allResearch;
+      console.log(this.getAvailable())
     });
+  }
 
+  getAvailable(): ResearchTopic[] {
+    return ResearchTopic.getAvailable();
+  }
+  research(research) {
+    ResearchTopic.research(research);
   }
 }

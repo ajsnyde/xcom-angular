@@ -1,9 +1,11 @@
 <h2>Research and Developement</h2>
 <table id="availableResearch">
   <tbody>
-    <tr *ngFor="let research of allResearch">
-      <td>{{research.name}}</td>
-      <td>{{research.isAvailable}}</td>
+    <tr *ngFor="let r of getAvailable()">
+      <td>{{r.name}}</td>
+      <td>
+        <button (click)="research(r.name)">Research</button>
+      </td>
     </tr>
   </tbody>
 </table>

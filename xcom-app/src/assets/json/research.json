@@ -5639,7 +5639,7 @@
     "knowledgeShown": "armour.predator_3"
   },
   {
-    "isAvailable": false,
+    "isAvailable": true,
     "complete": false,
     "name": "Researches.AlienInvasion",
     "cost": 10,
@@ -9984,7 +9984,7 @@
     "name": "Researches.Dummy",
     "cost": 5,
     "category": "Weaponary",
-    "reqs": "Researches.AlienInvasion",
+    "reqs": "Researches.Dummy",
     "unlocks": "UnlockKnowledge( \"Researches.Dummy\" );",
     "knowledgeShown": "Researches.Dummy"
   }
