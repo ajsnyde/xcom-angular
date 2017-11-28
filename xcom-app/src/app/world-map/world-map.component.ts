@@ -42,7 +42,7 @@ export class WorldMap implements OnInit, OnDestroy {
 
   move() {
     this.appService.player.ufos.forEach(ufo => ufo.move());
-    this.appService.player.interceptors.forEach(interceptor => interceptor.move());
+    this.appService.player.getFlyingInterceptors().forEach(interceptor => interceptor.move());
     this.objects.forEach(mapObject => {
       mapObject.moveObjectRandom();
     });
@@ -63,14 +63,15 @@ export class WorldMap implements OnInit, OnDestroy {
     });
     this.isWaitingForTarget = true;
     console.log(interceptors);
-
   }
-  async clickTarget(target: Target) {
-    if (this.isWaitingForTarget)
-      this.proposedTaskForce.forEach(interceptor => {
-        if (interceptor.landed)
-          this.appService.player.interceptors.push(interceptor);
-        interceptor.setTarget(target);
-      })
+  clickTarget(target: Target) {
+    if (!this.isWaitingForTarget)
+      return;
+    else this.isWaitingForTarget = !this.isWaitingForTarget;
+    this.proposedTaskForce.forEach(interceptor => {
+      if (interceptor.landed)
+        interceptor.landed = false;
+      interceptor.setTarget(target);
+    })
   }
 }

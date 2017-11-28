@@ -5,7 +5,7 @@
       <option *ngFor="let c of speedChoices" [ngValue]="c">{{c}} seconds</option>
     </select>
     <button class="btn-primary" (click)="launchButton(content)">Launch Task Force</button>
-    <div id="mapContainer" style="position:absolute;">
+    <div id="mapContainer" [style.cursor]="isWaitingForTarget?'crosshair':''" style="position:absolute;">
       <img src="https://www.worldmapsonline.com/images/giclee/satellite_image_maps/world_physical_pacific_giclee_lg.jpg" style="z-index:-1;position:absolute;" [height]="height" [width]="width">
       <div *ngFor="let item of objects" style="position:absolute" [style.left]="item.x+'px'" [style.top]="item.y+'px'">
         <img [src]="item.imgPath" (click)="item.click()">
@@ -14,7 +14,7 @@
         <img src="../../assets/xcomBase.png" [routerLink]="['/baseView', i]" class="baseIcon" [ngStyle]="{'margin-left':base.getRadarRange()+'px', 'margin-top':base.getRadarRange()+'px'}">
       </div>
       <app-map-object *ngFor="let ufo of appService.player.ufos; let i = index" [imgPath]="'../../assets/ufo.png'" [x]="ufo.x" [y]="ufo.y" [name]="i" [type]="ufo" (click)="clickTarget(ufo)"></app-map-object>
-      <app-map-object *ngFor="let interceptor of appService.player.interceptors; let i = index" [imgPath]="'../../assets/xcomAircraft.png'" [x]="interceptor.x" [y]="interceptor.y" [name]="i" [type]="interceptor"></app-map-object>
+      <app-map-object *ngFor="let interceptor of appService.player.getFlyingInterceptors(); let i = index" [imgPath]="'../../assets/xcomAircraft.png'" [x]="interceptor.x" [y]="interceptor.y" [name]="i" [type]="interceptor"></app-map-object>
     </div>
   </div>
 </div>
@@ -26,8 +26,8 @@
     </button>
   </div>
   <div class="modal-body">
-    <select [(ngModel)]="proposedTaskForce" multiple>
-      <option *ngFor="let interceptor of appService.player.getInterceptors()" [value]="interceptor"> {{interceptor.name}}</option>
+    <select [(ngModel)]="proposedTaskForce" size="20" multiple>
+      <option *ngFor="let interceptor of appService.player.getAllInterceptors()" [value]="interceptor" [disabled]="!interceptor.landed"> {{interceptor.name}}</option>
     </select>`
   </div>
   <div class="modal-footer">
