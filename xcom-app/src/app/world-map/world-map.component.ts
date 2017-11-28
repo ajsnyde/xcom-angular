@@ -5,6 +5,8 @@ import { Observable, Subscription } from 'rxjs/Rx';
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Interceptor } from '../models/interceptor.model';
+import { Target } from '../models/target.model';
 
 @Component({
   selector: 'world-map',
@@ -19,9 +21,10 @@ export class WorldMap implements OnInit, OnDestroy {
   height = 500;
   width = 1000;
   tick: Subscription;
-
+  proposedTaskForce: Interceptor[] = [];
+  isWaitingForTarget = false;
   ngOnInit() {
-    for (let i = 0; i < 5; i++)
+    for (let i = 0; i < 2; i++)
       this.objects.push(new AlienBase());
     this.timeChange();
   }
@@ -52,21 +55,22 @@ export class WorldMap implements OnInit, OnDestroy {
     }
   }
 
-  launchButton(content) {
-    this.modalService.open(content).result.then((result) => {
-      console.log(`Closed with: ${result}`);
+  async launchButton(content) {
+    let interceptors = await this.modalService.open(content).result.then((interceptors: Interceptor[]) => {
+      return interceptors;
     }, (reason) => {
-      console.log(`Dismissed ${this.getDismissReason(reason)}`);
+      console.log(`Dismissed ${reason}`);
     });
-  }
+    this.isWaitingForTarget = true;
+    console.log(interceptors);
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+  }
+  async clickTarget(target: Target) {
+    if (this.isWaitingForTarget)
+      this.proposedTaskForce.forEach(interceptor => {
+        if (interceptor.landed)
+          this.appService.player.interceptors.push(interceptor);
+        interceptor.setTarget(target);
+      })
   }
 }

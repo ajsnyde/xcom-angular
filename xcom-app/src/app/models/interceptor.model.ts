@@ -1,4 +1,5 @@
 import { Target } from "./target.model";
+import { Base } from "./base.model";
 
 export class interceptorType {
   public constructor(public name: string, public maxSpeed: number) { }
@@ -9,17 +10,20 @@ export class Interceptor extends Target {
     new interceptorType("F-16", .5)
   ];
 
-  constructor(x, y) {
+  constructor(homeBase: Base) {
     super();
-    this.x = x;
-    this.y = y;
+    this.homeBase = homeBase;
+    this.x = this.homeBase.x;
+    this.y = this.homeBase.y;
   }
 
   static idCounter = 0;
   id = Interceptor.idCounter++;
   name = 'Interceptor-' + this.id;
   interceptorType = Interceptor.interceptorTypes[0];
+  homeBase: Base;
   target = new Target();
+  landed = true;
 
   public setWaypoint(x, y): Interceptor {
     this.target = new Target();
@@ -30,6 +34,11 @@ export class Interceptor extends Target {
 
   public setTarget(target: Target): Interceptor {
     this.target = target;
+    this.landed = false;
+    return this;
+  }
+  public setHomeBase(homeBase: Base): Interceptor {
+    this.homeBase = homeBase;
     return this;
   }
 

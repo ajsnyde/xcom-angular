@@ -8,7 +8,7 @@ export class Base {
   y = 0;
   facilities: Facility[] = DefaultFacilities();
   stores = [];
-  interceptors: Interceptor[] = [new Interceptor(500, 250), new Interceptor(500, 250)];
+  interceptors: Interceptor[] = [new Interceptor(this), new Interceptor(this)];
 
   getFacilityAt(x, y) {
     return this.facilities.find(facility => facility.x == x && facility.y == y)
