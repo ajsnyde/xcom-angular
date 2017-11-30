@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Interceptor } from '../models/interceptor.model';
 import { Target } from '../models/target.model';
+import { TopMenuComponent } from '../top-menu/top-menu.component';
+import { LaunchFormComponent } from '../launch-form/launch-form.component';
 
 @Component({
   selector: 'world-map',
@@ -57,12 +59,15 @@ export class WorldMap implements OnInit, OnDestroy {
 
   async launchButton(content) {
     let interceptors = await this.modalService.open(content).result.then((interceptors: Interceptor[]) => {
+      this.isWaitingForTarget = true;
       return interceptors;
     }, (reason) => {
       console.log(`Dismissed ${reason}`);
     });
-    this.isWaitingForTarget = true;
-    console.log(interceptors);
+  }
+  open() {
+    const modalRef = this.modalService.open(LaunchFormComponent);
+    modalRef.componentInstance.allInterceptors = this.appService.player.getAllInterceptors();
   }
   clickTarget(target: Target) {
     if (!this.isWaitingForTarget)
