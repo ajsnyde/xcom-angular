@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgModel } from '@angular/forms';
-import { MapObject, AlienBase, XcomBase, XcomAircraft } from "./world-map.model";
 import { Observable, Subscription } from 'rxjs/Rx';
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
@@ -16,7 +15,6 @@ import { LaunchFormComponent } from '../launch-form/launch-form.component';
   styleUrls: ['world-map.scss']
 })
 export class WorldMap implements OnInit, OnDestroy {
-  objects: MapObject[] = [];
   constructor(public appService: AppService, public router: Router, private modalService: NgbModal) { }
   speedChoices = [15, 30, 60, 300, 900, 3600];
   speed = this.speedChoices[0];
@@ -26,8 +24,6 @@ export class WorldMap implements OnInit, OnDestroy {
   proposedTaskForce: Interceptor[] = [];
   isWaitingForTarget = false;
   ngOnInit() {
-    for (let i = 0; i < 2; i++)
-      this.objects.push(new AlienBase());
     this.timeChange();
   }
   ngOnDestroy() {
@@ -44,9 +40,6 @@ export class WorldMap implements OnInit, OnDestroy {
   move() {
     this.appService.player.ufos.forEach(ufo => ufo.move());
     this.appService.player.getFlyingInterceptors().forEach(interceptor => interceptor.move());
-    this.objects.forEach(mapObject => {
-      mapObject.moveObjectRandom();
-    });
   }
   keyPress(event) {
     event = event - 49;

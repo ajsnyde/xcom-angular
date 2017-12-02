@@ -60,6 +60,6 @@ export class Interceptor implements Target {
   getStatus(): string {
     if (this.landed)
       return "Landed - " + this.homeBase.name
-    else return "Pursuing " + this.target.name;
+    else return "Flying to  " + this.target.name;
   }
 }

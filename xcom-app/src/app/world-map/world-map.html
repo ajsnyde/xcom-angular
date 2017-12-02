@@ -1,4 +1,3 @@
-<!--component html goes here -->
 <div class="row" (window:keydown)="keyPress($event.keyCode)">
   <div class="col">
     <select [(ngModel)]="speed" (ngModelChange)="timeChange()">
@@ -7,14 +6,11 @@
     <button [ngClass]="{'disabled btn-outline-dark': isWaitingForTarget, 'btn-outline-primary': !isWaitingForTarget, 'btn': true}" (click)="launchButtonClicked()" [disabled]="isWaitingForTarget">Dispatch Task Force</button>
     <div id="mapContainer" [style.cursor]="isWaitingForTarget?'crosshair':''" style="position:absolute;">
       <img src="https://www.worldmapsonline.com/images/giclee/satellite_image_maps/world_physical_pacific_giclee_lg.jpg" style="z-index:-1;position:absolute;" [height]="height" [width]="width">
-      <div *ngFor="let item of objects" style="position:absolute" [style.left]="item.x+'px'" [style.top]="item.y+'px'">
-        <img [src]="item.imgPath" (click)="item.click()">
-      </div>
       <div *ngFor="let base of appService.player.bases; let i = index" [ngStyle]="{'width': base.getRadarRange()*2+'px','height': base.getRadarRange()*2+'px', 'border-radius':base.getRadarRange()+'px','top':base.y+'px', 'left':base.x+'px'}" class="base">
-        <img src="../../assets/xcomBase.png" [routerLink]="['/baseView', i]" class="baseIcon" [ngStyle]="{'margin-left':base.getRadarRange()+'px', 'margin-top':base.getRadarRange()+'px'}">
+        <img src="../../assets/xcomBase.png" (click)="clickTarget(base)" [routerLink]="isWaitingForTarget?[]:['/baseView', i]" class="baseIcon" [ngStyle]="{'margin-left':base.getRadarRange()+'px', 'margin-top':base.getRadarRange()+'px'}">
       </div>
       <app-map-object *ngFor="let ufo of appService.player.ufos; let i = index" [imgPath]="'../../assets/ufo.png'" [x]="ufo.x" [y]="ufo.y" [name]="i" [type]="ufo" (click)="clickTarget(ufo)"></app-map-object>
-      <app-map-object *ngFor="let interceptor of appService.player.getFlyingInterceptors(); let i = index" [imgPath]="'../../assets/xcomAircraft.png'" [x]="interceptor.x" [y]="interceptor.y" [name]="i" [type]="interceptor" (click)="clickInterceptor(interceptor)"></app-map-object>
+      <app-map-object *ngFor="let interceptor of appService.player.getFlyingInterceptors(); let i = index" [imgPath]="'../../assets/xcomAircraft.png'" [x]="interceptor.x" [y]="interceptor.y" [name]="i" [type]="interceptor" (click)="clickTarget(interceptor)"></app-map-object>
     </div>
   </div>
 </div>
