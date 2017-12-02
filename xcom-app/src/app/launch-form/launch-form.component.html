@@ -1,16 +1,16 @@
-<div class="modal-header">
+<div class="modal-header" id="launchMenu">
   <h4 class="modal-title">Scramble Interceptors</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-<div class="modal-body">
-  <select [(ngModel)]="proposedTaskForce" size="allInterceptors.length" multiple>
-    <option *ngFor="let interceptor of allInterceptors" [value]="interceptor" [disabled]="!interceptor.landed">
+<div class="modal-body" id="launchSelectDiv">
+  <select [(ngModel)]="proposedTaskForce" size="allInterceptors.length" id="launchSelect" multiple>
+    <option *ngFor="let interceptor of allInterceptors" [value]="interceptor" [ngClass]="{'landed':interceptor.landed,'hasTarget':!interceptor.landed }">
       {{interceptor.name}}</option>
-  </select>`
+  </select>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-outline-dark" (click)="d('Close click')">Close</button>
-  <button type="button" [ngClass]="{'disabled': proposedTaskForce.length == 0, 'btn-outline-dark': true, 'btn': true}" [disabled]="proposedTaskForce.length == 0" (click)="activeModal.close(proposedTaskForce)">Launch</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss('Close click')">Close</button>
+  <button type="button" [ngClass]="{'disabled': proposedTaskForce.length == 0, 'btn-outline-dark': true, 'btn': true}" [disabled]="proposedTaskForce.length == 0" (click)="rerouteConfirm()">Launch</button>
 </div>

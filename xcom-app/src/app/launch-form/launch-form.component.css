@@ -1,0 +1,17 @@
+#launchSelectDiv {
+  display: grid;
+}
+
+option {
+  background-color: black;
+  border: 1px solid darkgreen;
+  color: white
+}
+
+.landed {
+  color: #00FF00;
+}
+
+.hasTarget {
+  color: orange
+}

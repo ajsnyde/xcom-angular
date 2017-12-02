@@ -36,7 +36,6 @@ export class WorldMap implements OnInit, OnDestroy {
   timeChange() {
     if (!!this.tick)
       this.tick.unsubscribe();
-    console.log("time changed" + this.speed)
     this.tick = Observable.interval((1000 * 15) / this.speed).subscribe(x => {
       this.move();
     });
@@ -56,18 +55,13 @@ export class WorldMap implements OnInit, OnDestroy {
       this.timeChange();
     }
   }
-
-  async launchButton(content) {
-    let interceptors = await this.modalService.open(content).result.then((interceptors: Interceptor[]) => {
-      this.isWaitingForTarget = true;
-      return interceptors;
-    }, (reason) => {
-      console.log(`Dismissed ${reason}`);
-    });
-  }
-  open() {
+  launchButtonClicked() {
     const modalRef = this.modalService.open(LaunchFormComponent);
     modalRef.componentInstance.allInterceptors = this.appService.player.getAllInterceptors();
+    modalRef.componentInstance.reroute.subscribe(interceptors => {
+      this.proposedTaskForce = interceptors;
+      this.isWaitingForTarget = true;
+    });
   }
   clickTarget(target: Target) {
     if (!this.isWaitingForTarget)

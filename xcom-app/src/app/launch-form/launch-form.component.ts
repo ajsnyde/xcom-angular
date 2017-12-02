@@ -18,4 +18,8 @@ export class LaunchFormComponent implements OnInit {
   ngOnInit() {
   }
 
+  rerouteConfirm() {
+    this.reroute.emit(this.proposedTaskForce);
+    this.activeModal.close(this.proposedTaskForce)
+  }
 }

@@ -4,8 +4,7 @@
     <select [(ngModel)]="speed" (ngModelChange)="timeChange()">
       <option *ngFor="let c of speedChoices" [ngValue]="c">{{c}} seconds</option>
     </select>
-    <button [ngClass]="{'disabled btn-outline-dark': isWaitingForTarget, 'btn-outline-primary': !isWaitingForTarget, 'btn': true}" (click)="launchButton(content)" [disabled]="isWaitingForTarget">Launch Task Force</button>
-    <button [ngClass]="{'disabled btn-outline-dark': isWaitingForTarget, 'btn-outline-primary': !isWaitingForTarget, 'btn': true}" (click)="open()" [disabled]="isWaitingForTarget">Reroute Task Force</button>
+    <button [ngClass]="{'disabled btn-outline-dark': isWaitingForTarget, 'btn-outline-primary': !isWaitingForTarget, 'btn': true}" (click)="launchButtonClicked()" [disabled]="isWaitingForTarget">Dispatch Task Force</button>
     <div id="mapContainer" [style.cursor]="isWaitingForTarget?'crosshair':''" style="position:absolute;">
       <img src="https://www.worldmapsonline.com/images/giclee/satellite_image_maps/world_physical_pacific_giclee_lg.jpg" style="z-index:-1;position:absolute;" [height]="height" [width]="width">
       <div *ngFor="let item of objects" style="position:absolute" [style.left]="item.x+'px'" [style.top]="item.y+'px'">
@@ -19,21 +18,3 @@
     </div>
   </div>
 </div>
-<ng-template #content let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h4 class="modal-title">Scramble Interceptors</h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <select [(ngModel)]="proposedTaskForce" size="20" multiple>
-      <option *ngFor="let interceptor of appService.player.getAllInterceptors()" [value]="interceptor" [disabled]="!interceptor.landed">
-        {{interceptor.name}}</option>
-    </select>`
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="d('Close click')">Close</button>
-    <button type="button" [ngClass]="{'disabled': proposedTaskForce.length == 0, 'btn-outline-dark': true, 'btn': true}" [disabled]="proposedTaskForce.length == 0" (click)="c(proposedTaskForce)">Launch</button>
-  </div>
-</ng-template>
