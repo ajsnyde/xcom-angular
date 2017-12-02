@@ -1,16 +1,17 @@
 import { Target } from "./target.model";
+import { Coordinates } from './coordinates.model';
 
 export class UfoType {
   public constructor(public name: string, public maxSpeed: number) { }
 }
 
-export class Ufo extends Target {
+export class Ufo implements Target {
+  x = 0;
+  y = 0;
   static UfoTypes: UfoType[] = [
     new UfoType("smallScout", .6)
   ];
-
   constructor() {
-    super();
     this.x = Math.random() * 1000;
     this.y = Math.random() * 500;
   }
@@ -20,10 +21,10 @@ export class Ufo extends Target {
   name = 'UFO-' + this.id;
   UfoType = Ufo.UfoTypes[0];
 
-  target = new Target();
+  target: Target = new Coordinates();
 
   public setWaypoint(x, y): Ufo {
-    this.target = new Target();
+    this.target = new Coordinates();
     this.target.x = x;
     this.target.y = y;
     return this;

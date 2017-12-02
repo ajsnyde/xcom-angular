@@ -7,7 +7,7 @@
 <div class="modal-body" id="launchSelectDiv">
   <select [(ngModel)]="proposedTaskForce" size="allInterceptors.length" id="launchSelect" multiple>
     <option *ngFor="let interceptor of allInterceptors" [value]="interceptor" [ngClass]="{'landed':interceptor.landed,'hasTarget':!interceptor.landed }">
-      {{interceptor.name}}</option>
+      {{interceptor.name}} - {{interceptor.getStatus()}}</option>
   </select>
 </div>
 <div class="modal-footer">

@@ -1,7 +1,8 @@
 import { Facility, FacilityType, DefaultFacilities } from "./facility.model";
 import { Interceptor } from "./interceptor.model";
+import { Target } from "./target.model";
 
-export class Base {
+export class Base implements Target {
   name = '';
   //location on map
   x = 0;

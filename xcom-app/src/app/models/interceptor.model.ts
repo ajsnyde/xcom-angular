@@ -1,17 +1,18 @@
 import { Target } from "./target.model";
 import { Base } from "./base.model";
+import { Coordinates } from './coordinates.model';
 
 export class interceptorType {
   public constructor(public name: string, public maxSpeed: number) { }
 }
 
-export class Interceptor extends Target {
+export class Interceptor implements Target {
   static interceptorTypes: interceptorType[] = [
     new interceptorType("F-16", .5)
   ];
-
+  x = 0;
+  y = 0;
   constructor(homeBase: Base) {
-    super();
     this.homeBase = homeBase;
     this.x = this.homeBase.x;
     this.y = this.homeBase.y;
@@ -22,11 +23,11 @@ export class Interceptor extends Target {
   name = 'Interceptor-' + this.id;
   interceptorType = Interceptor.interceptorTypes[0];
   homeBase: Base;
-  target = new Target();
+  target: Target = new Coordinates();
   landed = true;
 
   public setWaypoint(x, y): Interceptor {
-    this.target = new Target();
+    this.target = new Coordinates();
     this.target.x = x;
     this.target.y = y;
     return this;
@@ -54,5 +55,11 @@ export class Interceptor extends Target {
 
     this.x += (tx / dist) * this.interceptorType.maxSpeed;
     this.y += (ty / dist) * this.interceptorType.maxSpeed;
+  }
+
+  getStatus(): string {
+    if (this.landed)
+      return "Landed - " + this.homeBase.name
+    else return "Pursuing " + this.target.name;
   }
 }

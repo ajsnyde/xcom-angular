@@ -1,4 +1,5 @@
-export class Target {
-  x = 0;
-  y = 0;
+export interface Target {
+  x: number;
+  y: number;
+  name: string;
 }
