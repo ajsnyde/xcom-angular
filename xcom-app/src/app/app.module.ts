@@ -12,7 +12,6 @@ import {
 } from '@angular/router';
 import { BaseViewComponent } from './base-view/base-view.component';
 import { AppService } from './app.service';
-import { MapObjectComponent } from './world-map/map-object/map-object.component';
 import { ResearchViewComponent } from './research-view/research-view.component';
 import { Http, HttpModule } from '@angular/http';
 import { LaunchFormComponent } from './launch-form/launch-form.component';
@@ -37,7 +36,6 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     WorldMap,
-    MapObjectComponent,
     TopMenuComponent,
     BaseViewComponent,
     ResearchViewComponent,
