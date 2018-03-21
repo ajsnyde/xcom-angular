@@ -9,8 +9,12 @@
       <div *ngFor="let base of appService.player.bases; let i = index" [ngStyle]="{'width': base.getRadarRange()*2+'px','height': base.getRadarRange()*2+'px', 'border-radius':base.getRadarRange()+'px','top':base.y+'px', 'left':base.x+'px'}" class="base">
         <img src="../../assets/xcomBase.png" (click)="clickTarget(base)" [routerLink]="isWaitingForTarget?[]:['/baseView', i]" class="baseIcon" [ngStyle]="{'margin-left':base.getRadarRange()+'px', 'margin-top':base.getRadarRange()+'px'}">
       </div>
-      <app-map-object *ngFor="let ufo of appService.player.ufos; let i = index" [imgPath]="'../../assets/ufo.png'" [x]="ufo.x" [y]="ufo.y" [name]="i" [type]="ufo" (click)="clickTarget(ufo)"></app-map-object>
-      <app-map-object *ngFor="let interceptor of appService.player.getFlyingInterceptors(); let i = index" [imgPath]="'../../assets/xcomAircraft.png'" [x]="interceptor.x" [y]="interceptor.y" [name]="i" [type]="interceptor" (click)="clickTarget(interceptor)"></app-map-object>
-    </div>
+      <div *ngFor="let ufo of appService.player.ufos; let i = index">
+        <img src="../../assets/ufo.png" (click)="clickTarget(ufo)" style="position:absolute" [style.left]="ufo.x+'px'" [style.top]="ufo.y+'px'">
+       </div>
+       <div *ngFor="let interceptor of appService.player.getFlyingInterceptors(); let i = index">
+        <img src="../../assets/xcomAircraft.png" (click)="clickTarget(interceptor)" style="position:absolute" [style.left]="interceptor.x+'px'" [style.top]="interceptor.y+'px'">
+       </div>
+       </div>
   </div>
 </div>
