@@ -45,7 +45,12 @@ export class Interceptor implements Target {
 
   public move() {
     if (Math.abs(this.x - this.target.x) < 5 && Math.abs(this.y - this.target.y) < 5) {
-      console.log(this.name + ' is within standoff range of target.')
+      if(this.target instanceof Base){
+        this.setHomeBase(this.target as Base);
+        this.landed = true;
+      }
+      else
+        console.log(this.name + ' is within standoff range of target.');
     }
     let tx = this.target.x - this.x,
       ty = this.target.y - this.y,
