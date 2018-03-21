@@ -5,7 +5,7 @@
     </select>
     <button [ngClass]="{'disabled btn-outline-dark': isWaitingForTarget, 'btn-outline-primary': !isWaitingForTarget, 'btn': true}" (click)="launchButtonClicked()" [disabled]="isWaitingForTarget">Dispatch Task Force</button>
     <div id="mapContainer" [style.cursor]="isWaitingForTarget?'crosshair':''" style="position:absolute;">
-      <img src="https://www.worldmapsonline.com/images/giclee/satellite_image_maps/world_physical_pacific_giclee_lg.jpg" style="z-index:-1;position:absolute;" [height]="height" [width]="width">
+      <img src="../../assets/world.svg" style="z-index:-1;position:absolute;" [height]="height" [width]="width">
       <div *ngFor="let base of appService.player.bases; let i = index" [ngStyle]="{'width': base.getRadarRange()*2+'px','height': base.getRadarRange()*2+'px', 'border-radius':base.getRadarRange()+'px','top':base.y+'px', 'left':base.x+'px'}" class="base">
         <img src="../../assets/xcomBase.png" (click)="clickTarget(base)" [routerLink]="isWaitingForTarget?[]:['/baseView', i]" class="baseIcon" [ngStyle]="{'margin-left':base.getRadarRange()+'px', 'margin-top':base.getRadarRange()+'px'}">
       </div>
