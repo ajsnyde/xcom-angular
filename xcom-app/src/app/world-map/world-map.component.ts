@@ -40,6 +40,7 @@ export class WorldMap implements OnInit, OnDestroy {
   move() {
     this.appService.player.ufos.forEach(ufo => ufo.move());
     this.appService.player.getFlyingInterceptors().forEach(interceptor => interceptor.move());
+    this.appService.player.getLandedInterceptors().forEach(interceptor => interceptor.refuel());
   }
   keyPress(event) {
     event = event - 49;

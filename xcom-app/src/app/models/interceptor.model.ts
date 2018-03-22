@@ -3,15 +3,16 @@ import { Base } from "./base.model";
 import { Coordinates } from './coordinates.model';
 
 export class interceptorType {
-  public constructor(public name: string, public maxSpeed: number) { }
+  public constructor(public name: string, public maxSpeed: number, public fuelCapacity: number) { }
 }
 
 export class Interceptor implements Target {
   static interceptorTypes: interceptorType[] = [
-    new interceptorType("F-16", .5)
+    new interceptorType("F-16", .5, 480)
   ];
   x = 0;
   y = 0;
+
   constructor(homeBase: Base) {
     this.homeBase = homeBase;
     this.x = this.homeBase.x;
@@ -25,7 +26,8 @@ export class Interceptor implements Target {
   homeBase: Base;
   target: Target = new Coordinates();
   landed = true;
-
+  fuelCapacity = Interceptor.interceptorTypes[0].fuelCapacity; // flight-hours
+  fuel = 0;
   public setWaypoint(x, y): Interceptor {
     this.target = new Coordinates();
     this.target.x = x;
@@ -45,13 +47,16 @@ export class Interceptor implements Target {
 
   public move() {
     if (Math.abs(this.x - this.target.x) < 5 && Math.abs(this.y - this.target.y) < 5) {
-      if(this.target instanceof Base){
+      if (this.target instanceof Base) {
         this.setHomeBase(this.target as Base);
         this.landed = true;
       }
       else
         console.log(this.name + ' is within standoff range of target.');
+    } else if (this.fuel <= 0) {
+      this.setTarget(this.homeBase);
     }
+    this.fuel--;
     let tx = this.target.x - this.x,
       ty = this.target.y - this.y,
       dist = Math.sqrt(tx * tx + ty * ty),
@@ -62,9 +67,17 @@ export class Interceptor implements Target {
     this.y += (ty / dist) * this.interceptorType.maxSpeed;
   }
 
+  refuel() {
+    if (this.fuel < this.fuelCapacity)
+      this.fuel = Math.min(this.fuel += 10, this.fuelCapacity);
+  }
+
   getStatus(): string {
     if (this.landed)
-      return "Landed - " + this.homeBase.name
+      if (this.fuel < this.fuelCapacity)
+        return "Refueling (" + this.fuel + "/" + this.fuelCapacity + ") - " + this.homeBase.name;
+      else
+        return "Landed - " + this.homeBase.name
     else return "Flying to  " + this.target.name;
   }
 }
