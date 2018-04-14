@@ -24,20 +24,20 @@ export class Interceptor implements Target {
   name = 'Interceptor-' + this.id;
   interceptorType = Interceptor.interceptorTypes[0];
   homeBase: Base;
-  target: Target = new Coordinates();
+  target: Target = new Coordinates(0, 0);
   landed = true;
   fuelCapacity = Interceptor.interceptorTypes[0].fuelCapacity; // flight-hours
   fuel = 0;
   public setWaypoint(x, y): Interceptor {
-    this.target = new Coordinates();
-    this.target.x = x;
-    this.target.y = y;
+    this.landed = false;
+    this.target = new Coordinates(x, y);
     return this;
   }
 
   public setTarget(target: Target): Interceptor {
-    this.target = target;
-    this.landed = false;
+    if (target == this)
+      this.setTarget(new Coordinates(this.x + .00001, this.y + .00001));
+    else this.target = target;
     return this;
   }
   public setHomeBase(homeBase: Base): Interceptor {
@@ -46,6 +46,21 @@ export class Interceptor implements Target {
   }
 
   public move() {
+    if (this.fuel <= 0 && this.target != this.homeBase) {
+      console.log("going to homebase")
+      this.setTarget(this.homeBase);
+    }
+    console.log("moving towards" + this.target.name)
+    this.fuel--;
+    let tx = this.target.x - this.x,
+      ty = this.target.y - this.y,
+      dist = Math.sqrt(tx * tx + ty * ty),
+      rad = Math.atan2(ty, tx),
+      angle = rad / Math.PI * 180;
+    this.x += (tx / dist) * this.interceptorType.maxSpeed;
+    this.y += (ty / dist) * this.interceptorType.maxSpeed;
+
+
     if (Math.abs(this.x - this.target.x) < 5 && Math.abs(this.y - this.target.y) < 5) {
       if (this.target instanceof Base) {
         this.setHomeBase(this.target as Base);
@@ -53,18 +68,7 @@ export class Interceptor implements Target {
       }
       else
         console.log(this.name + ' is within standoff range of target.');
-    } else if (this.fuel <= 0) {
-      this.setTarget(this.homeBase);
     }
-    this.fuel--;
-    let tx = this.target.x - this.x,
-      ty = this.target.y - this.y,
-      dist = Math.sqrt(tx * tx + ty * ty),
-      rad = Math.atan2(ty, tx),
-      angle = rad / Math.PI * 180;
-
-    this.x += (tx / dist) * this.interceptorType.maxSpeed;
-    this.y += (ty / dist) * this.interceptorType.maxSpeed;
   }
 
   refuel() {
@@ -78,6 +82,6 @@ export class Interceptor implements Target {
         return "Refueling (" + this.fuel + "/" + this.fuelCapacity + ") - " + this.homeBase.name;
       else
         return "Landed - " + this.homeBase.name
-    else return "Flying to  " + this.target.name;
+    else return "Flying to  " + this.target.name + " - (" + this.fuel + "/" + this.fuelCapacity + ")";
   }
 }

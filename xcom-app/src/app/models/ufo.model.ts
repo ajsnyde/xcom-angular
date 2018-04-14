@@ -21,12 +21,10 @@ export class Ufo implements Target {
   name = 'UFO-' + this.id;
   UfoType = Ufo.UfoTypes[0];
 
-  target: Target = new Coordinates();
+  target: Target = new Coordinates(0, 0);
 
   public setWaypoint(x, y): Ufo {
-    this.target = new Coordinates();
-    this.target.x = x;
-    this.target.y = y;
+    this.target = new Coordinates(x, y);
     return this;
   }
 

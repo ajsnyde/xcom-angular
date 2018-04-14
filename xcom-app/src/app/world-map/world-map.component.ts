@@ -8,6 +8,7 @@ import { Interceptor } from '../models/interceptor.model';
 import { Target } from '../models/target.model';
 import { TopMenuComponent } from '../top-menu/top-menu.component';
 import { LaunchFormComponent } from '../launch-form/launch-form.component';
+import { TargetModalComponent } from '../target-modal/target-modal.component';
 
 @Component({
   selector: 'world-map',
@@ -42,6 +43,7 @@ export class WorldMap implements OnInit, OnDestroy {
     this.appService.player.getFlyingInterceptors().forEach(interceptor => interceptor.move());
     this.appService.player.getLandedInterceptors().forEach(interceptor => interceptor.refuel());
   }
+
   keyPress(event) {
     event = event - 49;
     if (event < this.speedChoices.length && event >= 0) {
@@ -49,21 +51,39 @@ export class WorldMap implements OnInit, OnDestroy {
       this.timeChange();
     }
   }
-  launchButtonClicked() {
+
+  launchButtonClicked(target?: Target) {
     const modalRef = this.modalService.open(LaunchFormComponent);
     modalRef.componentInstance.allInterceptors = this.appService.player.getAllInterceptors();
     modalRef.componentInstance.reroute.subscribe(interceptors => {
       this.proposedTaskForce = interceptors;
-      this.isWaitingForTarget = true;
+      if (target)
+        this.scrambleInterceptors(target);
+      else
+        this.isWaitingForTarget = true;
     });
   }
+
   clickTarget(target: Target) {
-    if (!this.isWaitingForTarget)
-      return;
-    else this.isWaitingForTarget = !this.isWaitingForTarget;
+    if (this.isWaitingForTarget) {
+      this.scrambleInterceptors(target);
+      this.isWaitingForTarget = false;
+    }
+    else
+      this.openTargetModal(target);
+  }
+
+  openTargetModal(target: Target) {
+    const modalRef = this.modalService.open(TargetModalComponent);
+    modalRef.componentInstance.target = target;
+    modalRef.componentInstance.reroute.subscribe(i => {
+      this.launchButtonClicked(target);
+    });
+  }
+
+  scrambleInterceptors(target: Target) {
     this.proposedTaskForce.forEach(interceptor => {
-      if (interceptor.landed)
-        interceptor.landed = false;
+      interceptor.landed = false;
       interceptor.setTarget(target);
     })
   }

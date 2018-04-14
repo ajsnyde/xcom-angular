@@ -15,6 +15,7 @@ import { AppService } from './app.service';
 import { ResearchViewComponent } from './research-view/research-view.component';
 import { Http, HttpModule } from '@angular/http';
 import { LaunchFormComponent } from './launch-form/launch-form.component';
+import { TargetModalComponent } from './target-modal/target-modal.component';
 
 const routes: Routes = [
   { path: 'geoscape', component: WorldMap },
@@ -39,10 +40,11 @@ const routes: Routes = [
     TopMenuComponent,
     BaseViewComponent,
     ResearchViewComponent,
-    LaunchFormComponent
+    LaunchFormComponent,
+    TargetModalComponent
   ],
   providers: [AppService],
   bootstrap: [AppComponent],
-  entryComponents: [LaunchFormComponent]
+  entryComponents: [LaunchFormComponent, TargetModalComponent]
 })
 export class AppModule { }
